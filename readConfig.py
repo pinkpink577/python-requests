@@ -12,7 +12,7 @@ class ReadConfig:
         data = fd.read()
 
         #  remove BOM
-        if data[:3] == codecs.BOM_UTF8:  # 判断是否带有BOM(ByteOrderMark)文件，如果有则直接改写文件内容，删除BOM
+        if data[:3] == codecs.BOM_UTF8:  # 判断前三个元素是否为BOM(ByteOrderMark)文件，如果有则直接改写文件内容，删除BOM
             data = data[3:]
             file = codecs.open(configPath, "w")
             file.write(data)
