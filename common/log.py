@@ -20,9 +20,7 @@ class Log:
         # 判断测试结果文件是否存在
         if not os.path.exists(logPath):
             os.mkdir(logPath)
-        # defined logger
         self.logger = logging.getLogger()
-        # defined log level
         self.logger.setLevel(logging.INFO)
 
         # 定义FileHandler

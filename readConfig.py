@@ -23,9 +23,9 @@ class ReadConfig:
         self.cf.read(configPath)    # 读取configPath路径
 
     # 获取邮箱地址
-    def get_email(self, name):
-        value = self.cf.get("EMAIL", name)
-        return value
+    # def get_email(self, name):
+    #     value = self.cf.get("EMAIL", name)
+    #     return value
 
     # 获取接口地址
     def get_http(self, name):
@@ -33,6 +33,6 @@ class ReadConfig:
         return value
 
     # 获取数据库地址
-    def get_db(self, name):
-        value = self.cf.get("DATABASE", name)
-        return value
+    # def get_db(self, name):
+    #     value = self.cf.get("DATABASE", name)
+    #     return value
