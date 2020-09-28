@@ -1,4 +1,4 @@
-# @describe：日志记录
+# @describe：日志生成
 
 import logging, os
 import readConfig

@@ -1,7 +1,7 @@
 import unittest
-import os
-import readConfig
-import HTMLTestRunner
+from common import HTMLTestRunner
+from common.log import *
+from common.configHttp import *
 
 
 def set_case_list(self):
@@ -38,17 +38,18 @@ def set_case_suite(self):
 def run(self):
     try:
         suit = self.set_case_suite()
+        log_ = Log()
         if suit is not None:
-            logger.info("********TEST START********")
-            fp = open(resultPath, 'wb')
+            log_.logger.info("********TEST START********")
+            fp = open(self.resultPath, 'wb')
             runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Test Report', description='Test Description')
             runner.run(suit)
         else:
-            logger.info("Have no case to test.")
+            log_.logger.info("Have no case to test.")
     except Exception as ex:
-        logger.error(str(ex))
+        log_.logger.error(str(ex))
     finally:
-        logger.info("*********TEST END*********")
+        log_.logger.info("*********TEST END*********")
         # send test report by email
         # if int(on_off) == 0:
         #     self.email.send_email()

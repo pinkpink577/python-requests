@@ -1,13 +1,16 @@
 import os
 from xlrd import open_workbook
 from xml.etree import ElementTree as ElementTree
-from common.Log import MyLog as Log
+from common.Log import *
+from common import configHttp
 
 localConfigHttp = configHttp.ConfigHttp()
 log = Log.get_log()
 logger = log.get_logger()
 
 # 从excel文件中读取测试用例
+
+
 def get_xls(xls_name, sheet_name):
     cls = []
     # get xls file's path
@@ -23,8 +26,11 @@ def get_xls(xls_name, sheet_name):
             cls.append(sheet.row_values(i))
     return cls
 
+
 # 从xml文件中读取sql语句
 database = {}
+
+
 def set_xml():
     if len(database) == 0:
         sql_path = os.path.join(proDir, "testFile", "SQL.xml")

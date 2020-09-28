@@ -1,3 +1,5 @@
+# @describe:请求响应配置
+
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
