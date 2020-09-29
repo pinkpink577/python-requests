@@ -16,7 +16,7 @@ def search():
     postcode = request.values.get('postcode')
     if key and postcode:
         if key == '1' and postcode == '644000':
-            resu = {'error_code': 0, 'reason': 'successed'}
+            resu = {'error_code': 0, 'reason': 'ok'}
             return json.dumps(resu, ensure_ascii=False)
         else:
             resu = {'error_code': 1, 'reason': 'error postcode'}
@@ -28,4 +28,4 @@ def search():
 
 
 if __name__ == '__main__':
-    server.run(debug=True, port=8887, host='127.0.0.1')
+    server.run(debug=True, port=8888, host='127.0.0.1')

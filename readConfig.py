@@ -1,38 +1,28 @@
 import os
-import codecs
 import configparser
+import getpathInfo  # 引入我们自己的写的获取路径的类
 
-proDir = os.path.split(os.path.realpath(__file__))[0]  # 1.获得当前执行脚本的绝对路径 2.按照路径将文件名和路径分隔开，取路径名
-configPath = os.path.join(proDir, "config.ini")     # 将proDir目录与config.ini文件名合成一条路径
+path = getpathInfo.get_Path()  # 调用实例化
+config_path = os.path.join(path, 'config.ini')  # 进入配置文件
+config = configparser.ConfigParser()  # 调用外部的读取配置文件的方法
+config.read(config_path, encoding='utf-8')
 
 
-class ReadConfig:
-    def __init__(self):
-        fd = open(configPath)
-        data = fd.read()
+class ReadConfig():
 
-        #  remove BOM
-        if data[:3] == codecs.BOM_UTF8:  # 判断前三个元素是否为BOM(ByteOrderMark)文件，如果有则直接改写文件内容，删除BOM
-            data = data[3:]
-            file = codecs.open(configPath, "w")
-            file.write(data)
-            file.close()
-        fd.close()
-
-        self.cf = configparser.ConfigParser()   # 初始化
-        self.cf.read(configPath)    # 读取configPath路径
-
-    # 获取邮箱地址
-    # def get_email(self, name):
-    #     value = self.cf.get("EMAIL", name)
-    #     return value
-
-    # 获取接口地址
     def get_http(self, name):
-        value = self.cf.get("HTTP", name)
+        value = config.get('Http', name)
         return value
 
-    # 获取数据库地址
-    # def get_db(self, name):
-    #     value = self.cf.get("DATABASE", name)
+    def get_email(self, name):
+        value = config.get('Email', name)
+        return value
+
+    # def get_mysql(self, name):
+    #     value = config.get('DATABASE', name)
     #     return value
+
+
+if __name__ == '__main__':  # 测试一下，我们读取配置文件的方法是否可用
+    print('HTTP中的baseurl值为：', ReadConfig().get_http('baseurl'))
+    print('EMAIL中的开关on_off值为：', ReadConfig().get_email('on_off'))

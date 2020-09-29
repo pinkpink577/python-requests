@@ -1,60 +1,35 @@
 #   @describe：接口配置文件
 
 import requests
-import readConfig as readConfig
-from common.log import MyLog as Log
-
-localReadConfig = readConfig.ReadConfig()
+import json
 
 
-class ConfigHttp:
+class RunMain():
 
-    def __init__(self):
+    def send_post(self, url, data):  # 定义一个方法，传入需要的参数url和data
+        # 参数必须按照url、data顺序传入
+        result = requests.post(url=url, data=data).json()  # 因为这里要封装post方法，所以这里的url和data值不能写死
+        res = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2)
+        return res
 
-        # 读取配置文件内容
-        global host, port, timeout
-        host = localReadConfig.get_http("baseurl")
-        port = localReadConfig.get_http("port")
-        timeout = localReadConfig.get_http("timeout")
-        self.log = Log.get_log()
-        self.logger = self.log.get_logger()
-        self.headers = {}
-        self.params = {}
-        self.data = {}
-        self.url = None
-        self.files = {}
+    def send_get(self, url, data):
+        result = requests.get(url=url, params=data).json()
+        res = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2)
+        return res
 
-    def set_url(self, url):
-        self.url = host + url
+    def run_main(self, method, url=None, data=None):  # 定义一个run_main函数，通过传过来的method来进行不同的get或post请求
+        result = None
+        if method == 'post':
+            result = self.send_post(url, data)
+        elif method == 'get':
+            result = self.send_get(url, data)
+        else:
+            print("method值错误！！！")
+        return result
 
-    def set_headers(self, header):
-        self.headers = header
 
-    def set_params(self, param):
-        self.params = param
-
-    def set_data(self, data):
-        self.data = data
-
-    def set_files(self, file):
-        self.files = file
-
-    # 定义get请求方式
-    def get(self):
-        try:
-            response = requests.get(self.url, params=self.params, headers=self.headers, timeout=float(timeout))
-            # 失败请求，抛出异常
-            return response
-        except TimeoutError:
-            self.logger.error("Time out!")
-            return None
-
-    # 定义post请求方式
-    def post(self):
-        try:
-            response = requests.post(self.url, headers=self.headers, data=self.data, files=self.files, timeout=float(timeout))
-            # 失败请求，抛出异常
-            return response
-        except TimeoutError:
-            self.logger.error("Time out!")
-            return None
+if __name__ == '__main__':  # 通过写死参数，来验证我们写的请求是否正确
+    result1 = RunMain().run_main('post', 'http://127.0.0.1:8888/query', {'key': '1', 'postcode': '64400'})
+    result2 = RunMain().run_main('get', 'http://127.0.0.1:8888/query', 'key=1&postcode=644000')
+    print(result1)
+    print(result2)
