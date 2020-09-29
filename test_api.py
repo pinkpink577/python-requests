@@ -10,7 +10,7 @@ from flask import request
 server = flask.Flask(__name__)
 
 
-@server.route('/query', methods=['get', 'post'])
+@server.route('/query1', methods=['get', 'post'])
 def search():
     key = request.values.get('key')
     postcode = request.values.get('postcode')

@@ -7,7 +7,7 @@ readconfig = readConfig.ReadConfig()
 
 class GeturlParams(object):
     def get_Url(self):
-        new_url = readconfig.get_http('scheme') + '://' + readconfig.get_http('baseurl') + ':8888' + '/query' + '?'
+        new_url = readconfig.get_http('scheme') + '://' + readconfig.get_http('baseurl') + ':8888' + '/query1' + '?'
         return new_url
 
 
